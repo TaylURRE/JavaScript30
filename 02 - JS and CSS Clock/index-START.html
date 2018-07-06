@@ -12,6 +12,7 @@
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
+        <div class="circle"></div>
       </div>
     </div>
 
@@ -62,12 +63,43 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition-timing-function: cubic-bezier(0.19, 1.51, 0.58, 1);
+    }
+
+    .circle {
+        height: 20px;
+        width: 20px;
+        background-color: #bada55;
+        border-radius: 50%;
+
     }
 
   </style>
 
   <script>
+  const secondHand = document.querySelector('.second-hand');
+  const minsHand = document.querySelector('.min-hand');
+  const hourHand = document.querySelector('.hour-hand');
 
+  function setDate() {
+    const now = new Date();
+    const hour = now.getHours();
+    const mins = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const hourDegrees = ((hour/12) * 360) + 90;
+    const minsDegrees =  ((mins/60) * 360) + 90;
+    const secondsDegrees = ((seconds/60) * 360) + 90;
+
+    secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+    minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+  }
+
+  setInterval(setDate, 1000);
 
   </script>
 </body>
