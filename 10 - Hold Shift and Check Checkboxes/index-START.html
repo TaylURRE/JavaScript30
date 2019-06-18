@@ -93,12 +93,39 @@
       <p>Good Luck!</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="test">
       <p>Don't forget to tweet your result!</p>
     </div>
   </div>
 
 <script>
+
+const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+let lastChecked;
+
+function handleCheck(e) {
+let inBetween = false;
+//check if shift key is down
+// and check that it is checked
+  if (e.shiftKey && this.checked) {
+
+    checkboxes.forEach(checkbox => {
+      if (checkbox === this || checkbox === lastChecked) {
+        inBetween = !inBetween;
+      }
+
+      if (inBetween) {
+        checkbox.checked = true;
+      }
+    });
+  }
+
+  lastChecked = this;
+}
+
+checkboxes.forEach(function (checkbox) {
+  checkbox.addEventListener('click', handleCheck)
+});
 </script>
 </body>
 </html>
